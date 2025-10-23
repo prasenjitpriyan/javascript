@@ -1,6 +1,9 @@
+import { ModeToggle } from '@/components/ModeToggle';
+
 const Home = () => {
   return (
     <main className="min-h-screen flex items-center justify-center transition-colors duration-300 p-6">
+      <ModeToggle />
       <section className="w-full max-w-md bg-dark-charcoal dark:bg-minion-yellow text-minion-yellow dark:text-dark-charcoal rounded-xl shadow-lg border border-dark-charcoal dark:border-minion-yellow/40 p-8 text-center transition-all duration-300">
         <h1 className="text-3xl font-bold mb-3 tracking-tight">
           Something went wrong!

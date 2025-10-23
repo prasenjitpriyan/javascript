@@ -1,3 +1,5 @@
+import { GlobalErrorProvider } from '@/components/GlobalErrorContext';
+import { GlobalErrorToast } from '@/components/GlobalErrorToast';
 import './globals.css';
 
 export const metadata = {
@@ -8,7 +10,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-amber-300">{children}</body>
+      <body className="bg-amber-300">
+        <GlobalErrorProvider>
+          {children}
+          <GlobalErrorToast />
+        </GlobalErrorProvider>
+      </body>
     </html>
   );
 }

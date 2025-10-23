@@ -542,4 +542,62 @@ only its tile shows an error message — the rest continue to work.
 
 ---
 
-Would you like me to show a **real example** where `ErrorBoundary` catches a failure in a mock component (like a broken `Widget`)? I can write that out so you can see the behavior clearly.
+# JavaScript logo (with your theme colors)
+
+to appear as your **Next.js website favicon**, and for that favicon to **automatically change color in light/dark mode** using your CSS variables:
+
+```css
+--color-minion-yellow: #f0db4f;
+--color-dark-charcoal: #323330;
+```
+
+Perfectly doable ✅
+Let’s go step-by-step so it works cleanly in Next.js.
+
+---
+
+## ⚙️ 1. Create Two SVG Versions of the Logo
+
+Since browser favicons don’t dynamically read Tailwind or CSS variables, the best way is to make **two small SVG files** that use your colors directly.
+
+In your `public/` folder, create:
+
+### 🟡 `public/favicon-light.svg`
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="12" fill="#f0db4f"/>
+  <path fill="#323330" d="M80.6 97.4c2.3 3.7 5.3 6.4 10.6 6.4 4.5 0 7.4-2.3 7.4-5.5 0-3.8-3-5.2-8.1-7.4l-2.8-1.2c-8.1-3.5-13.5-7.8-13.5-17 0-8.5 6.5-15 16.8-15 7.3 0 12.6 2.5 16.4 9l-9 5.8c-2-3.5-4.1-4.9-7.4-4.9s-5.3 2.1-5.3 4.9c0 3.4 2.1 4.8 6.9 6.9l2.8 1.2c9.6 4.1 15 8.3 15 17.7 0 10.1-7.9 15.6-18.4 15.6-10.3 0-17-4.9-20.3-11.3l8.9-5.8zM43.4 98.2c1.7 3 3.2 5.5 6.9 5.5 3.5 0 5.7-1.4 5.7-6.9V57.3h10.6v40.1c0 11-6.5 16-15.9 16-8.5 0-13.4-4.4-15.9-9.7l8.6-5.5z"/>
+</svg>
+```
+
+### ⚫ `public/favicon-dark.svg`
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="12" fill="#323330"/>
+  <path fill="#f0db4f" d="M80.6 97.4c2.3 3.7 5.3 6.4 10.6 6.4 4.5 0 7.4-2.3 7.4-5.5 0-3.8-3-5.2-8.1-7.4l-2.8-1.2c-8.1-3.5-13.5-7.8-13.5-17 0-8.5 6.5-15 16.8-15 7.3 0 12.6 2.5 16.4 9l-9 5.8c-2-3.5-4.1-4.9-7.4-4.9s-5.3 2.1-5.3 4.9c0 3.4 2.1 4.8 6.9 6.9l2.8 1.2c9.6 4.1 15 8.3 15 17.7 0 10.1-7.9 15.6-18.4 15.6-10.3 0-17-4.9-20.3-11.3l8.9-5.8zM43.4 98.2c1.7 3 3.2 5.5 6.9 5.5 3.5 0 5.7-1.4 5.7-6.9V57.3h10.6v40.1c0 11-6.5 16-15.9 16-8.5 0-13.4-4.4-15.9-9.7l8.6-5.5z"/>
+</svg>
+```
+
+---
+
+## 🧠 2. Configure Favicon Switching in Next.js
+
+In **Next.js 13+ (App Router)**, you can do this neatly in `app/layout.js` (or `app/layout.tsx`):
+
+```jsx
+export const metadata = {
+  title: 'My JavaScript Site',
+  icons: {
+    icon: [
+      { url: '/favicon-light.svg', media: '(prefers-color-scheme: light)' },
+      { url: '/favicon-dark.svg', media: '(prefers-color-scheme: dark)' },
+    ],
+  },
+};
+```
+
+This tells the browser to automatically switch the favicon based on user theme 🌞🌙.
+
+---

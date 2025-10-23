@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-minion-yellow: #f0db4f;
+  --color-dark-charcoal: #323330;
+}
+
 @keyframes slide-in {
   from {
     transform: translateY(-10px);

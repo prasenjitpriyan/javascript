@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -12,7 +13,16 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function ModeToggle() {
-  const { setTheme } = useTheme();
+  const { setTheme, theme, resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    const currentTheme = theme === 'system' ? resolvedTheme : theme;
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (!favicon) return;
+
+    favicon.href =
+      currentTheme === 'dark' ? '/favicon-dark.svg' : '/favicon-light.svg';
+  }, [theme, resolvedTheme]);
 
   return (
     <DropdownMenu>
@@ -23,6 +33,7 @@ export function ModeToggle() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme('light')}>
           Light

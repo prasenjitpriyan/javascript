@@ -7,10 +7,7 @@ export const metadata = {
   title: 'My JavaScript',
   description: 'Where you can learn JavaScript',
   icons: {
-    icon: [
-      { url: '/favicon-light.svg', media: '(prefers-color-scheme: light)' },
-      { url: '/favicon-dark.svg', media: '(prefers-color-scheme: dark)' },
-    ],
+    icons: { icon: '/favicon-light.svg' },
   },
 };
 

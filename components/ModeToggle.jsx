@@ -15,13 +15,70 @@ import {
 export function ModeToggle() {
   const { setTheme, theme, resolvedTheme } = useTheme();
 
+  // 🔁 Update all favicons dynamically
   useEffect(() => {
     const currentTheme = theme === 'system' ? resolvedTheme : theme;
-    const favicon = document.querySelector('link[rel="icon"]');
-    if (!favicon) return;
 
-    favicon.href =
-      currentTheme === 'dark' ? '/favicon-dark.svg' : '/favicon-light.svg';
+    const faviconMap = {
+      light: {
+        default: '/favicon-light.svg',
+        png32: '/favicon-light-32.png',
+        apple: '/apple-touch-icon-light.png',
+        android192: '/android-chrome-192x192-light.png',
+        android512: '/android-chrome-512x512-light.png',
+      },
+      dark: {
+        default: '/favicon-dark.svg',
+        png32: '/favicon-dark-32.png',
+        apple: '/apple-touch-icon-dark.png',
+        android192: '/android-chrome-192x192-dark.png',
+        android512: '/android-chrome-512x512-dark.png',
+      },
+    };
+
+    const links = [
+      {
+        rel: 'icon',
+        sizes: undefined,
+        selector: 'link[rel="icon"]:not([sizes])',
+        href: faviconMap[currentTheme].default,
+      },
+      {
+        rel: 'icon',
+        sizes: '32x32',
+        selector: 'link[rel="icon"][sizes="32x32"]',
+        href: faviconMap[currentTheme].png32,
+      },
+      {
+        rel: 'apple-touch-icon',
+        sizes: undefined,
+        selector: 'link[rel="apple-touch-icon"]',
+        href: faviconMap[currentTheme].apple,
+      },
+      {
+        rel: 'icon',
+        sizes: '192x192',
+        selector: 'link[rel="icon"][sizes="192x192"]',
+        href: faviconMap[currentTheme].android192,
+      },
+      {
+        rel: 'icon',
+        sizes: '512x512',
+        selector: 'link[rel="icon"][sizes="512x512"]',
+        href: faviconMap[currentTheme].android512,
+      },
+    ];
+
+    links.forEach(({ rel, sizes, selector, href }) => {
+      let link = document.querySelector(selector);
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = rel;
+        if (sizes) link.sizes = sizes;
+        document.head.appendChild(link);
+      }
+      link.href = href;
+    });
   }, [theme, resolvedTheme]);
 
   return (

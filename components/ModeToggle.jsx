@@ -16,7 +16,9 @@ export function ModeToggle() {
   const { setTheme, theme, resolvedTheme } = useTheme();
 
   useEffect(() => {
-    const currentTheme = theme === 'system' ? resolvedTheme : theme;
+    if (!resolvedTheme) return;
+
+    const currentTheme = resolvedTheme;
 
     const faviconMap = {
       light: {
@@ -35,50 +37,58 @@ export function ModeToggle() {
       },
     };
 
+    if (!faviconMap[currentTheme]) return;
+
     const links = [
       {
         rel: 'icon',
-        sizes: undefined,
-        selector: 'link[rel="icon"]:not([sizes])',
+        type: 'image/svg+xml',
+        sizes: null,
+        selector: 'link[rel="icon"][type="image/svg+xml"]',
         href: faviconMap[currentTheme].default,
       },
       {
         rel: 'icon',
+        type: 'image/png',
         sizes: '32x32',
         selector: 'link[rel="icon"][sizes="32x32"]',
         href: faviconMap[currentTheme].png32,
       },
       {
         rel: 'apple-touch-icon',
-        sizes: undefined,
+        type: null,
+        sizes: '180x180',
         selector: 'link[rel="apple-touch-icon"]',
         href: faviconMap[currentTheme].apple,
       },
       {
         rel: 'icon',
+        type: 'image/png',
         sizes: '192x192',
         selector: 'link[rel="icon"][sizes="192x192"]',
         href: faviconMap[currentTheme].android192,
       },
       {
         rel: 'icon',
+        type: 'image/png',
         sizes: '512x512',
         selector: 'link[rel="icon"][sizes="512x512"]',
         href: faviconMap[currentTheme].android512,
       },
     ];
 
-    links.forEach(({ rel, sizes, selector, href }) => {
+    links.forEach(({ rel, type, sizes, selector, href }) => {
       let link = document.querySelector(selector);
       if (!link) {
         link = document.createElement('link');
         link.rel = rel;
-        if (sizes) link.sizes = sizes;
+        if (type) link.type = type;
+        if (sizes) link.setAttribute('sizes', sizes);
         document.head.appendChild(link);
       }
       link.href = href;
     });
-  }, [theme, resolvedTheme]);
+  }, [resolvedTheme]);
 
   return (
     <DropdownMenu>

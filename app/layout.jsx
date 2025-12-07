@@ -29,14 +29,13 @@ export default function RootLayout({ children }) {
       <body className="bg-minion-yellow dark:bg-dark-charcoal text-dark-charcoal dark:text-minion-yellow relative">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
           disableTransitionOnChange>
           <GlobalErrorProvider>
             <div className="fixed right-4 top-8 -translate-y-1/2 z-50">
               <ModeToggle />
             </div>
-            {children}
+            <main>{children}</main>
             <GlobalErrorToast />
           </GlobalErrorProvider>
         </ThemeProvider>

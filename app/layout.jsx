@@ -1,12 +1,14 @@
+import Footer from '@/components/Footer';
 import { GlobalErrorProvider } from '@/components/GlobalErrorContext';
 import { GlobalErrorToast } from '@/components/GlobalErrorToast';
-import { ModeToggle } from '@/components/ModeToggle';
+import Navbar from '@/components/Navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 
 export const metadata = {
-  title: 'My JavaScript',
-  description: 'Where you can learn JavaScript',
+  title: 'ScriptLens - Learn JavaScript Visually',
+  description:
+    "Don't just read code. See how it runs. Detailed visual explanations for every JavaScript concept.",
 };
 
 export default function RootLayout({ children }) {
@@ -26,16 +28,15 @@ export default function RootLayout({ children }) {
           href="/apple-touch-icon-light.png"
         />
       </head>
-      <body className="bg-minion-yellow dark:bg-dark-charcoal text-dark-charcoal dark:text-minion-yellow relative">
+      <body className="bg-white dark:bg-dark-charcoal text-dark-charcoal dark:text-gray-100 min-h-screen flex flex-col font-sans antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           disableTransitionOnChange>
           <GlobalErrorProvider>
-            <div className="fixed right-4 top-8 -translate-y-1/2 z-50">
-              <ModeToggle />
-            </div>
-            <main>{children}</main>
+            <Navbar />
+            <main className="grow">{children}</main>
+            <Footer />
             <GlobalErrorToast />
           </GlobalErrorProvider>
         </ThemeProvider>

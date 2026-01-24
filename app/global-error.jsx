@@ -20,7 +20,7 @@ export default function GlobalError({ error, reset }) {
             {error?.message ||
               'A critical error has occurred. Please reload the app.'}
           </p>
-          <Button onClick={() => reset()} ref={retryButtonRef}>
+          <Button onClick={() => reset()} ref={reloadButtonRef}>
             Reload App
           </Button>
         </div>
